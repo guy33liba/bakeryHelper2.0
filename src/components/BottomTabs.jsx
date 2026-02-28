@@ -1,13 +1,13 @@
 const tabs = [
-  { path: "/", label: "בית" },
-  { path: "/recipes", label: "מתכונים" },
-  { path: "/list", label: "רשימה" },
-  { path: "/settings", label: "הגדרות" },
+  { path: "/", label: "Home" },
+  { path: "/recipes", label: "Recipes" },
+  { path: "/list", label: "List" },
+  { path: "/settings", label: "Settings" },
 ];
 
 function BottomTabs({ activePath, navigate }) {
   return (
-    <nav className="bottom-tabs" aria-label="ניווט תחתון">
+    <nav className="bottom-tabs" aria-label="Bottom navigation">
       {tabs.map((tab) => (
         <button
           key={tab.path}

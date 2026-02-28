@@ -34,11 +34,11 @@ function Settings({
   const handleExportTxt = () => {
     const text = listToText(groups);
     downloadText(text, "bakelist-list.txt", "text/plain");
-    showToast("נשמר");
+    showToast("Saved");
   };
 
   const handleExportCsv = () => {
-    const rows = ["קטגוריה,מרכיב,כמות,יחידה,מחיר"];
+    const rows = ["Category,Ingredient,Quantity,Unit,Price"];
     let total = 0;
     groups.forEach((group) => {
       group.items.forEach((item) => {
@@ -51,10 +51,10 @@ function Settings({
       });
     });
     if (total > 0) {
-      rows.push(`"סך הכול",,,,,"${total.toFixed(2)}"`);
+      rows.push(`"Total",,,,,"${total.toFixed(2)}"`);
     }
     downloadText(rows.join("\n"), "bakelist-list.csv", "text/csv");
-    showToast("נשמר");
+    showToast("Saved");
   };
 
   const handleImport = (event) => {
@@ -65,9 +65,9 @@ function Settings({
       try {
         const imported = importData(reader.result);
         setData({ ...loadData(true), ...imported });
-        showToast("נשמר");
+        showToast("Saved");
       } catch {
-        showToast("קובץ לא תקין");
+        showToast("Invalid file");
       }
     };
     reader.readAsText(file);
@@ -88,34 +88,34 @@ function Settings({
   return (
     <div className="stack">
       <BigCard>
-        <h2>ייצוא רשימת קנייה</h2>
+        <h2>Export shopping list</h2>
         <div className="button-row">
           <BigButton
             variant="secondary"
             onClick={handleExportCsv}
-            ariaLabel="ייצוא לאקסל"
+            ariaLabel="Export to Excel"
           >
-            לייצא לאקסל (CSV)
+            Export to Excel (CSV)
           </BigButton>
           <BigButton
             variant="secondary"
             onClick={handleExportTxt}
-            ariaLabel="ייצוא לטקסט"
+            ariaLabel="Export to text"
           >
-            לייצא לטקסט (TXT)
+            Export to text (TXT)
           </BigButton>
         </div>
       </BigCard>
 
       {/* <BigCard>
-        <h2>גיבוי</h2>
+        <h2>Backup</h2>
         <div className="button-row">
           <BigButton
             variant="secondary"
             onClick={() => fileRef.current?.click()}
-            ariaLabel="ייבוא גיבוי"
+            ariaLabel="Import backup"
           >
-            לייבא גיבוי (JSON)
+            Import backup (JSON)
           </BigButton>
           <input
             ref={fileRef}
@@ -123,30 +123,30 @@ function Settings({
             accept="application/json"
             className="hidden-input"
             onChange={handleImport}
-            aria-label="ייבוא קובץ"
+            aria-label="Import file"
           />
         </div>
-        <BigButton variant="ghost" onClick={resetAll} ariaLabel="איפוס נתונים">
-          לאפס הכול
+        <BigButton variant="ghost" onClick={resetAll} ariaLabel="Reset data">
+          Reset all
         </BigButton>
       </BigCard> */}
 
       <BigCard>
-        <h2>מחירי מרכיבים</h2>
+        <h2>Ingredient prices</h2>
         <div className="stack">
           <label className="field">
-            <span>שם מרכיב</span>
+            <span>Ingredient name</span>
             <input
               className="big-input"
               type="text"
               value={priceName}
               onChange={(event) => setPriceName(event.target.value)}
-              placeholder="דוגמה: קמח"
-              aria-label="שם מרכיב"
+              placeholder="Example: flour"
+              aria-label="Ingredient name"
             />
           </label>
           <label className="field">
-            <span>מחיר ליחידה</span>
+            <span>Price per unit</span>
             <input
               className="big-input"
               type="number"
@@ -154,24 +154,24 @@ function Settings({
               step="0.5"
               value={priceValue}
               onChange={(event) => setPriceValue(event.target.value)}
-              placeholder="דוגמה: 3.5"
-              aria-label="מחיר ליחידה"
+              placeholder="Example: 3.5"
+              aria-label="Price per unit"
             />
           </label>
           <BigButton
             variant="secondary"
             onClick={handleAddPrice}
-            ariaLabel="הוספת מחיר"
+            ariaLabel="Add price"
           >
-            להוסיף או לעדכן מחיר
+            Add or update price
           </BigButton>
-          <p className="muted">כשיחידה היא גרם, המחיר הוא לק"ג.</p>
+          <p className="muted">When the unit is grams, the price is per kg.</p>
         </div>
 
         {priceEntries.length === 0 ? (
-          <p className="muted">עדיין לא נשמרו מחירים.</p>
+          <p className="muted">No prices saved yet.</p>
         ) : (
-          <div className="price-list" aria-label="מחירי מרכיבים">
+          <div className="price-list" aria-label="Ingredient prices">
             {priceEntries.map(([name, price]) => (
               <div key={name} className="price-row">
                 <div className="price-name">{name}</div>
@@ -184,14 +184,14 @@ function Settings({
                   onChange={(event) =>
                     updateIngredientPrice(name, Number(event.target.value) || 0)
                   }
-                  aria-label={`עדכון מחיר ${name}`}
+                  aria-label={`Update price ${name}`}
                 />
                 <button
                   className="mini-remove"
                   onClick={() => removeIngredientPrice(name)}
-                  aria-label={`הסרת מחיר ${name}`}
+                  aria-label={`Remove price ${name}`}
                 >
-                  להסיר
+                  Remove
                 </button>
               </div>
             ))}
@@ -200,24 +200,24 @@ function Settings({
       </BigCard>
 
       <BigCard>
-        <h2>נתוני הדגמה</h2>
+        <h2>Demo data</h2>
         <div className="segmented">
           <button
             className={data.settings.demoDataEnabled ? "active" : ""}
             onClick={() => updateDemoEnabled(true)}
-            aria-label="הפעלת נתוני הדגמה"
+            aria-label="Enable demo data"
           >
-            פועל
+            On
           </button>
           <button
             className={!data.settings.demoDataEnabled ? "active" : ""}
             onClick={() => updateDemoEnabled(false)}
-            aria-label="כיבוי נתוני הדגמה"
+            aria-label="Disable demo data"
           >
-            כבוי
+            Off
           </button>
         </div>
-        <p className="muted">נתוני הדגמה שומרים את המתכונים המובנים.</p>
+        <p className="muted">Demo data keeps the built-in recipes.</p>
       </BigCard>
     </div>
   );

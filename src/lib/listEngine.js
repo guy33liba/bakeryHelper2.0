@@ -1,4 +1,4 @@
-const CATEGORY_ORDER = ["קמח", "סוכר", "מוצרי חלב", "שוקולד", "אחר"];
+const CATEGORY_ORDER = ["Flour", "Sugar", "Dairy", "Chocolate", "Other"];
 
 function normalizeName(name) {
   return name.trim().toLowerCase();
@@ -21,7 +21,7 @@ export function buildList(recipes, selected) {
           name: ingredient.name,
           unit: ingredient.unit,
           qty,
-          category: ingredient.category || "אחר",
+          category: ingredient.category || "Other",
           totalCost,
           key,
         });
@@ -37,7 +37,7 @@ export function buildList(recipes, selected) {
 
   const grouped = new Map();
   merged.forEach((item) => {
-    const category = item.category || "אחר";
+    const category = item.category || "Other";
     if (!grouped.has(category)) grouped.set(category, []);
     grouped.get(category).push(item);
   });
@@ -81,7 +81,7 @@ export function getRecipeCost(recipe, batches = 1) {
 }
 
 export function listToText(groups) {
-  if (!groups.length) return "עדיין אין פריטים.";
+  if (!groups.length) return "No items yet.";
   return groups
     .map((group) => {
       const lines = group.items.map((item) => {
