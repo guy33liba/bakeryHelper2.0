@@ -102,11 +102,11 @@ function App() {
       ...prev,
       recipes: [...prev.recipes, recipe],
     }));
-    showToast("נשמר");
+     showToast("Saved");
   };
 
   const removeRecipe = (recipeId) => {
-    if (!window.confirm("למחוק את המתכון הזה?")) return;
+     if (!window.confirm("Delete this recipe?")) return;
     setData((prev) => ({
       ...prev,
       recipes: prev.recipes.filter((recipe) => recipe.id !== recipeId),
@@ -117,7 +117,7 @@ function App() {
         ),
       },
     }));
-    showToast("נשמר");
+     showToast("Saved");
   };
 
   const updateListState = (checked) => {
@@ -128,10 +128,10 @@ function App() {
   };
 
   const resetAll = () => {
-    if (!window.confirm("לאפס את הכול?")) return;
+     if (!window.confirm("Reset everything?")) return;
     const fresh = loadData(true);
     setData(fresh);
-    showToast("נשמר");
+     showToast("Saved");
   };
 
   const updateDemoEnabled = (demoDataEnabled) => {
@@ -208,8 +208,8 @@ function App() {
   return (
     <div className="app-shell">
       <header className="app-header" aria-live="polite">
-        <div className="brand">בייקליסט</div>
-        <div className="tagline">עוגיות ועוגות, הכי פשוט שיש.</div>
+        <div className="brand">BakeList</div>
+        <div className="tagline">Cookies and cakes, made simple.</div>
         <div className="header-theme">
           <ThemeSwitch
             checked={data.settings.theme === "dark"}
@@ -222,8 +222,8 @@ function App() {
         {path === "/" && (
           <>
             <StepHeader
-              title="התחלה"
-              subtitle="בחרו מתכון, בחרו כמות סבבים, וקבלו רשימת קנייה."
+              title="Start"
+              subtitle="Pick a recipe, choose batches, and get a shopping list."
             />
             <Home
               recipes={data.recipes}
@@ -236,7 +236,7 @@ function App() {
 
         {path === "/recipes" && (
           <>
-            <StepHeader title="שלב 1" subtitle="בחרו מתכון אחד או יותר." />
+            <StepHeader title="Step 1" subtitle="Pick one or more recipes." />
             <Recipes
               recipes={data.recipes}
               selected={data.plan.selected}
@@ -252,7 +252,7 @@ function App() {
 
         {path === "/list" && (
           <>
-            <StepHeader title="שלב 2 ו-3" subtitle="בחרו סבבים, ואז קנו." />
+            <StepHeader title="Steps 2-3" subtitle="Choose batches, then shop." />
             <List
               recipes={data.recipes}
               selected={data.plan.selected}
@@ -267,7 +267,7 @@ function App() {
 
         {path === "/settings" && (
           <>
-            <StepHeader title="הגדרות" subtitle="מגדירים איך שנוח." />
+            <StepHeader title="Settings" subtitle="Tune it to your workflow." />
             <Settings
               data={data}
               setTheme={setTheme}

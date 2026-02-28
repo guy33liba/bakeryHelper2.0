@@ -31,7 +31,7 @@ function List({
     const text = listToText(groups);
     try {
       await navigator.clipboard.writeText(text);
-      showToast("הועתק");
+      showToast("Copied");
     } catch {
       const textArea = document.createElement("textarea");
       textArea.value = text;
@@ -39,7 +39,7 @@ function List({
       textArea.select();
       document.execCommand("copy");
       document.body.removeChild(textArea);
-      showToast("הועתק");
+      showToast("Copied");
     }
   };
 
@@ -52,13 +52,13 @@ function List({
   if (selected.length === 0) {
     return (
       <BigCard>
-        <h2>לא נבחרו מתכונים</h2>
-        <p className="muted">קודם בוחרים מתכון.</p>
+        <h2>No recipes selected</h2>
+        <p className="muted">Pick a recipe first.</p>
         <BigButton
           onClick={() => navigate("/recipes")}
-          ariaLabel="בחירת מתכונים"
+          ariaLabel="Choose recipes"
         >
-          לבחור מתכונים
+          Choose recipes
         </BigButton>
       </BigCard>
     );
@@ -67,7 +67,7 @@ function List({
   return (
     <div className="stack">
       <BigCard>
-        <h2>כמה סבבים?</h2>
+        <h2>How many batches?</h2>
         <div className="stack">
           {selected.map((item) => {
             const recipe = recipes.find((rec) => rec.id === item.recipeId);
@@ -78,10 +78,10 @@ function List({
               <div key={item.recipeId} className="batch-row">
                 <div>
                   <div className="batch-title">{recipe.title}</div>
-                  <div className="muted">סבבים</div>
+                  <div className="muted">Batches</div>
                   {perBatchCost > 0 && (
                     <div className="batch-cost">
-                      עלות לסבב: {perBatchCost.toFixed(2)} ₪ · סה"כ:{" "}
+                      Cost per batch: {perBatchCost.toFixed(2)} ₪ · Total:{" "}
                       {totalRecipeCost.toFixed(2)} ₪
                     </div>
                   )}
@@ -89,7 +89,7 @@ function List({
                 <div className="stepper">
                   <button
                     onClick={() => setBatches(item.recipeId, item.batches - 1)}
-                    aria-label={`הקטנת סבבים עבור ${recipe.title}`}
+                    aria-label={`Decrease batches for ${recipe.title}`}
                   >
                     -
                   </button>
@@ -98,7 +98,7 @@ function List({
                   </div>
                   <button
                     onClick={() => setBatches(item.recipeId, item.batches + 1)}
-                    aria-label={`הגדלת סבבים עבור ${recipe.title}`}
+                    aria-label={`Increase batches for ${recipe.title}`}
                   >
                     +
                   </button>
@@ -111,34 +111,34 @@ function List({
 
       <BigCard>
         <div className="list-header">
-          <h2>רשימת קנייה</h2>
-          <div className="button-row">
-            <BigButton
-              variant="secondary"
-              onClick={copyList}
-              ariaLabel="העתקת רשימה"
-            >
-              להעתיק רשימה
-            </BigButton>
-            <BigButton
-              variant="secondary"
-              onClick={sendToWhatsApp}
-              ariaLabel="שליחת רשימה לוואטסאפ"
-            >
-              לשלוח לוואטסאפ
-            </BigButton>
-            <BigButton
-              variant="ghost"
-              onClick={resetChecks}
-              ariaLabel="סימון הכל כלא נקנה"
-            >
-              לסמן הכול כלא נקנה
-            </BigButton>
+            <h2>Shopping list</h2>
+            <div className="button-row">
+              <BigButton
+                variant="secondary"
+                onClick={copyList}
+                ariaLabel="Copy list"
+              >
+                Copy list
+              </BigButton>
+              <BigButton
+                variant="secondary"
+                onClick={sendToWhatsApp}
+                ariaLabel="Send list to WhatsApp"
+              >
+                Send to WhatsApp
+              </BigButton>
+              <BigButton
+                variant="ghost"
+                onClick={resetChecks}
+                ariaLabel="Reset all to not purchased"
+              >
+                Reset all to not purchased
+              </BigButton>
+            </div>
           </div>
-        </div>
 
         {groups.length === 0 ? (
-          <p className="muted">עדיין אין פריטים.</p>
+          <p className="muted">No items yet.</p>
         ) : (
           <div className="list-groups">
             {groups.map((group) => (
@@ -156,7 +156,7 @@ function List({
                           type="checkbox"
                           checked={checked}
                           onChange={() => toggleCheck(item.key)}
-                          aria-label={`סימון ${item.name}`}
+                          aria-label={`Mark ${item.name}`}
                         />
                         <span>
                           {item.name} — {item.qty} {item.unit}
@@ -174,7 +174,7 @@ function List({
         )}
 
         {totalCost > 0 && (
-          <div className="total-row">סך הכול: {totalCost.toFixed(2)} ₪</div>
+          <div className="total-row">Total: {totalCost.toFixed(2)} ₪</div>
         )}
       </BigCard>
     </div>

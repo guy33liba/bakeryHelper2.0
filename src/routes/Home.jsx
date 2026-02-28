@@ -15,16 +15,16 @@ function Home({ recipes, selected, listState, navigate }) {
 
   return (
     <div className="stack">
-      <BigButton onClick={() => navigate("/recipes")} ariaLabel="התחלה">
-        התחלה
+      <BigButton onClick={() => navigate("/recipes")} ariaLabel="Get started">
+        Get started
       </BigButton>
 
       <BigCard>
-        <h2>מתכונים אחרונים</h2>
+        <h2>Recent recipes</h2>
         {selectedRecipes.length === 0 ? (
-          <p className="muted">עדיין לא נבחרו מתכונים.</p>
+          <p className="muted">No recipes selected yet.</p>
         ) : (
-          <ul className="simple-list" aria-label="מתכונים אחרונים">
+          <ul className="simple-list" aria-label="Recent recipes">
             {selectedRecipes.slice(0, 3).map((recipe) => (
               <li key={recipe.id}>{recipe.title}</li>
             ))}
@@ -33,24 +33,24 @@ function Home({ recipes, selected, listState, navigate }) {
         <BigButton
           variant="secondary"
           onClick={() => navigate("/recipes")}
-          ariaLabel="בחירת מתכונים"
+          ariaLabel="Choose recipes"
         >
-          לבחור מתכונים
+          Choose recipes
         </BigButton>
       </BigCard>
 
       <BigCard>
-        <h2>רשימת הקנייה שלי</h2>
+        <h2>My shopping list</h2>
         {allItems.length === 0 ? (
-          <p className="muted">עדיין אין רשימה. בחרו מתכון.</p>
+          <p className="muted">No list yet. Choose a recipe.</p>
         ) : (
           <>
             <p className="muted">
-              {checkedCount} מתוך {allItems.length} נקנו
+              {checkedCount} of {allItems.length} purchased
             </p>
             <ul
               className="simple-list"
-              aria-label="תצוגה מקדימה של רשימת קנייה"
+              aria-label="Shopping list preview"
             >
               {allItems.slice(0, 5).map((item) => (
                 <li key={item.key}>
@@ -63,9 +63,9 @@ function Home({ recipes, selected, listState, navigate }) {
         <BigButton
           variant="secondary"
           onClick={() => navigate("/list")}
-          ariaLabel="פתיחת רשימת קנייה"
+          ariaLabel="Open shopping list"
         >
-          לפתוח רשימת קנייה
+          Open shopping list
         </BigButton>
       </BigCard>
     </div>

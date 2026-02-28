@@ -7,48 +7,48 @@ import {
   pricePerUnitFromSaved,
 } from "../lib/ingredients.js";
 
-const UNITS = ["ג", 'ק"ג', "כפית", "כף", "כוס", "יח׳"];
-const CATEGORIES = ["קמח", "סוכר", "מוצרי חלב", "שוקולד", "אחר"];
+const UNITS = ["g", "kg", "tsp", "tbsp", "cup", "pcs"];
+const CATEGORIES = ["Flour", "Sugar", "Dairy", "Chocolate", "Other"];
 const UNIT_ALIASES = new Map([
-  ["ג", "ג"],
-  ["g", "ג"],
-  ["gram", "ג"],
-  ["grams", "ג"],
-  ['ק"ג', 'ק"ג'],
-  ["ק״ג", 'ק"ג'],
-  ["kg", 'ק"ג'],
-  ["כפית", "כפית"],
-  ["tsp", "כפית"],
-  ["teaspoon", "כפית"],
-  ["teaspoons", "כפית"],
-  ["כף", "כף"],
-  ["tbsp", "כף"],
-  ["tablespoon", "כף"],
-  ["tablespoons", "כף"],
-  ["כוס", "כוס"],
-  ["cup", "כוס"],
-  ["cups", "כוס"],
-  ["יח׳", "יח׳"],
-  ["יח", "יח׳"],
-  ["pcs", "יח׳"],
-  ["pc", "יח׳"],
-  ["piece", "יח׳"],
-  ["pieces", "יח׳"],
+  ["ג", "g"],
+  ["g", "g"],
+  ["gram", "g"],
+  ["grams", "g"],
+  ['ק"ג', "kg"],
+  ["ק״ג", "kg"],
+  ["kg", "kg"],
+  ["כפית", "tsp"],
+  ["tsp", "tsp"],
+  ["teaspoon", "tsp"],
+  ["teaspoons", "tsp"],
+  ["כף", "tbsp"],
+  ["tbsp", "tbsp"],
+  ["tablespoon", "tbsp"],
+  ["tablespoons", "tbsp"],
+  ["כוס", "cup"],
+  ["cup", "cup"],
+  ["cups", "cup"],
+  ["יח׳", "pcs"],
+  ["יח", "pcs"],
+  ["pcs", "pcs"],
+  ["pc", "pcs"],
+  ["piece", "pcs"],
+  ["pieces", "pcs"],
 ]);
 
 const CATEGORY_HINTS = [
-  { match: /קמח|שיבולת|flour|oat/i, category: "קמח" },
-  { match: /סוכר|דבש|sugar|honey/i, category: "סוכר" },
+  { match: /קמח|שיבולת|flour|oat/i, category: "Flour" },
+  { match: /סוכר|דבש|sugar|honey/i, category: "Sugar" },
   {
     match: /חמאה|ביצה|ביצים|חלב|שמנת|butter|egg|milk|cream/i,
-    category: "מוצרי חלב",
+    category: "Dairy",
   },
-  { match: /שוקולד|קקאו|chocolate|cocoa/i, category: "שוקולד" },
+  { match: /שוקולד|קקאו|chocolate|cocoa/i, category: "Chocolate" },
 ];
 
 function guessCategory(name) {
   const found = CATEGORY_HINTS.find((hint) => hint.match.test(name));
-  return found ? found.category : "אחר";
+  return found ? found.category : "Other";
 }
 
 function normalizeUnitToken(token) {
@@ -64,7 +64,7 @@ function parseIngredientLine(line) {
     return {
       name: fallbackName,
       qty: 1,
-      unit: "יח׳",
+      unit: "pcs",
       category: guessCategory(fallbackName),
       pricePerUnitRaw: 0,
     };
@@ -106,7 +106,7 @@ function parseIngredientLine(line) {
   return {
     name,
     qty: Number(qty) || 1,
-    unit: unit || "יח׳",
+    unit: unit || "pcs",
     category,
     pricePerUnitRaw: Number(pricePerUnit) || 0,
   };
@@ -116,10 +116,10 @@ function normalizeRecipe(raw) {
   if (!raw || !raw.title || !raw.ingredients) return null;
   const cleanIngredients = raw.ingredients
     .map((item) => ({
-      id: item.id || `${item.name || "item"}-${item.unit || "יח׳"}`,
-      name: item.name || "מרכיב",
+      id: item.id || `${item.name || "item"}-${item.unit || "pcs"}`,
+      name: item.name || "Ingredient",
       qty: Number(item.qty) || 1,
-      unit: item.unit || "יח׳",
+      unit: item.unit || "pcs",
       category: item.category || guessCategory(item.name || ""),
       pricePerUnit: Number(item.pricePerUnit) || 0,
       pricePerUnitRaw: Number(item.pricePerUnitRaw) || 0,
@@ -147,11 +147,11 @@ function parseTextRecipe(text) {
   const title = lines[0];
   let type = "cookie";
   let startIndex = 1;
-  if (lines[1] && /^(cookie|cake|עוגה|עוגיות)$/i.test(lines[1])) {
-    const rawType = lines[1].toLowerCase();
-    type = rawType === "cake" || rawType === "עוגה" ? "cake" : "cookie";
-    startIndex = 2;
-  }
+    if (lines[1] && /^(cookie|cake|עוגה|עוגיות)$/i.test(lines[1])) {
+      const rawType = lines[1].toLowerCase();
+      type = rawType === "cake" || rawType === "עוגה" ? "cake" : "cookie";
+      startIndex = 2;
+    }
   const ingredients = [];
   for (let i = startIndex; i < lines.length; i += 1) {
     const line = lines[i];
@@ -230,29 +230,29 @@ function Recipes({
             <BigCard key={recipe.id} className="recipe-card">
               <h2>{recipe.title}</h2>
               <p className="muted">
-                {recipe.type === "cookie" ? "עוגיות" : "עוגה"} ·{" "}
-                {recipe.ingredients.length} פריטים
+                {recipe.type === "cookie" ? "Cookies" : "Cake"} ·{" "}
+                {recipe.ingredients.length} items
               </p>
               {recipeCost > 0 && (
                 <p className="muted">
-                  עלות משוערת לסבב: {recipeCost.toFixed(2)} ₪
+                  Estimated cost per batch: {recipeCost.toFixed(2)} ₪
                 </p>
               )}
               <div className="button-row">
                 <BigButton
                   variant={isSelected ? "secondary" : "primary"}
                   onClick={() => toggleRecipe(recipe.id)}
-                  ariaLabel={isSelected ? "הסרה מהתכנית" : "הוספה לתכנית"}
+                  ariaLabel={isSelected ? "Remove from plan" : "Add to plan"}
                 >
-                  {isSelected ? "להסיר" : "להוסיף לתכנית"}
+                  {isSelected ? "Remove" : "Add to plan"}
                 </BigButton>
                 {!recipe.builtIn && (
                   <BigButton
                     variant="ghost"
                     onClick={() => removeRecipe(recipe.id)}
-                    ariaLabel="מחיקת מתכון"
+                    ariaLabel="Delete recipe"
                   >
-                    למחוק
+                    Delete
                   </BigButton>
                 )}
               </div>
@@ -261,39 +261,37 @@ function Recipes({
         })}
       </div>
 
-      <BigButton
-        variant="secondary"
-        onClick={() => navigate("/list")}
-        ariaLabel="מעבר לסבבים ולרשימה"
-      >
-        הבא: סבבים ורשימה
-      </BigButton>
+        <BigButton
+          variant="secondary"
+          onClick={() => navigate("/list")}
+          ariaLabel="Go to batches and list"
+        >
+          Next: batches and list
+        </BigButton>
 
       <BigCard>
-        <h2>להוסיף מתכון מטקסט</h2>
-        <p className="muted">
-          הדביקו מתכון בטקסט פשוט. אנחנו נחלץ את המרכיבים לבד.
-        </p>
+        <h2>Add recipe from text</h2>
+        <p className="muted">Paste a plain-text recipe. We'll extract the ingredients.</p>
         <label className="field">
-          <span>מרכיב אחד בכל שורה: כמות + יחידה + שם</span>
+          <span>One ingredient per line: amount + unit + name</span>
           <textarea
             className="big-input"
             rows={5}
             value={pasteText}
             onChange={(event) => setPasteText(event.target.value)}
             placeholder={
-              "דוגמה:\nעוגיות שוקולד\n200 ג קמח\n100 ג סוכר\n1 יח׳ ביצה"
+              "Example:\nChocolate chip cookies\n200 g flour\n100 g sugar\n1 pc egg"
             }
-            aria-label="הדבקת טקסט מתכון"
+            aria-label="Paste recipe text"
           />
         </label>
         <BigButton
           variant="secondary"
           onClick={handlePaste}
-          ariaLabel="הוספת מתכון מהדבקה"
+          ariaLabel="Add recipe from paste"
           className="full-width paste-action"
         >
-          לחלץ מרכיבים ולהוסיף
+          Extract ingredients and add
         </BigButton>
       </BigCard>
     </div>
