@@ -1,6 +1,6 @@
 // Vanilla JS port of the React app (hash-based routing).
 
-const ROUTES = ["/", "/recipes", "/list", "/settings"];
+const ROUTES = ["/all", "/", "/recipes", "/list", "/settings"];
 const STORAGE_KEY = "bakelist_v1";
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
@@ -699,7 +699,7 @@ function stepHeader({ title, subtitle }) {
 function getPathFromHash() {
   const raw = (window.location.hash || "").replace(/^#/, "").trim();
   const path = raw.startsWith("/") ? raw : "/";
-  return ROUTES.includes(path) ? path : "/";
+  return ROUTES.includes(path) ? path : "/all";
 }
 
 function navigate(path) {
@@ -1102,7 +1102,7 @@ function renderHome({ main }) {
 }
 
 function renderRecipes({ main }) {
-  main.appendChild(stepHeader({ title: "Step  1", subtitle: "Pick one or more recipes." }));
+  main.appendChild(stepHeader({ title: "Recipes", subtitle: "Pick one or more recipes." }));
   const selectedIds = new Set(state.data.plan.selected.map((item) => item.recipeId));
 
   const stack = el("div", { class: "stack" });
@@ -1198,7 +1198,7 @@ function renderRecipes({ main }) {
 }
 
 function renderList({ main }) {
-  main.appendChild(stepHeader({ title: "Steps 2-3", subtitle: "Choose batches, then shop." }));
+  main.appendChild(stepHeader({ title: "Batches & list", subtitle: "Choose batches, then shop." }));
 
   const selected = state.data.plan.selected;
   if (selected.length === 0) {
@@ -1557,8 +1557,24 @@ function renderSettings({ main }) {
   main.appendChild(stack);
 }
 
+function renderAll({ main }) {
+  const wrap = (id, label, renderFn) => {
+    const section = el("section", { class: "page-section", id, "aria-label": label });
+    renderFn({ main: section });
+    all.appendChild(section);
+  };
+
+  const all = el("div", { class: "page-all" });
+  wrap("home", "Home", ({ main: inner }) => renderHome({ main: inner }));
+  wrap("recipes", "Recipes", ({ main: inner }) => renderRecipes({ main: inner }));
+  wrap("list", "Shopping list", ({ main: inner }) => renderList({ main: inner }));
+  wrap("settings", "Settings", ({ main: inner }) => renderSettings({ main: inner }));
+  main.appendChild(all);
+}
+
 function renderBottomTabs({ shell, path }) {
   const tabs = [
+    { path: "/all", label: "All" },
     { path: "/", label: "Home" },
     { path: "/recipes", label: "Recipes" },
     { path: "/list", label: "List" },
@@ -1618,6 +1634,7 @@ function render() {
   renderHeader({ shell });
 
   const main = el("main", { class: "app-main" });
+  if (path === "/all") renderAll({ main });
   if (path === "/") renderHome({ main });
   if (path === "/recipes") renderRecipes({ main });
   if (path === "/list") renderList({ main });
@@ -1636,5 +1653,5 @@ function render() {
 
 document.documentElement.setAttribute("data-theme", state.data.settings.theme);
 window.addEventListener("hashchange", () => render());
-if (!window.location.hash) window.location.hash = "#/";
+if (!window.location.hash) window.location.hash = "#/all";
 render();
