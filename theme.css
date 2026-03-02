@@ -34,8 +34,8 @@
   --font-body: "Spline Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-size: 16px;
-  --line-height: 1.55;
+  --font-size: 18px;
+  --line-height: 1.58;
 
   /* Radii */
   --radius-sm: 12px;
@@ -54,7 +54,7 @@
   /* Layout */
   --maxw: 1320px;
   --nav-h: 76px;
-  --rail-w: 104px;
+  --rail-w: 160px;
 
   /* Motion */
   --t: 170ms;
@@ -226,9 +226,9 @@ a:hover {
 .brand {
   grid-area: brand;
   font-family: var(--font-display);
-  font-weight: 850;
+  font-weight: 900;
   letter-spacing: -0.03em;
-  font-size: 1.75rem;
+  font-size: 2rem;
   line-height: 1.05;
 }
 
@@ -297,7 +297,7 @@ a:hover {
 .step-header h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   line-height: 1.12;
   letter-spacing: -0.03em;
 }
@@ -326,7 +326,7 @@ a:hover {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: var(--space-5);
+  padding: var(--space-6);
   box-shadow:
     0 22px 60px color-mix(in oklab, var(--shadow), transparent 12%),
     0 1px 0 color-mix(in oklab, white, transparent 65%) inset;
@@ -372,10 +372,14 @@ a:hover {
 
 @media (max-width: 440px) { .big-card { padding: var(--space-4); } }
 
+@media (min-width: 720px) {
+  .big-card { padding: var(--space-7); }
+}
+
 .big-card h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
@@ -393,7 +397,7 @@ a:hover {
   border-radius: 999px;
   padding: 10px 14px;
   min-height: 44px;
-  font-weight: 820;
+  font-weight: 900;
   letter-spacing: 0.01em;
   cursor: pointer;
   box-shadow: 0 16px 36px color-mix(in oklab, var(--shadow), transparent 38%);
@@ -464,7 +468,7 @@ a:hover {
 textarea.big-input { min-height: 120px; padding-top: 12px; padding-bottom: 12px; resize: vertical; }
 
 .field { display: grid; gap: var(--space-2); }
-.field > span { font-weight: 760; }
+.field > span { font-weight: 900; }
 
 .theme-switch {
   display: inline-flex;
@@ -478,7 +482,7 @@ textarea.big-input { min-height: 120px; padding-top: 12px; padding-bottom: 12px;
   user-select: none;
 }
 
-.theme-label { font-weight: 820; }
+.theme-label { font-weight: 900; }
 
 .switch {
   width: 46px;
@@ -553,7 +557,9 @@ html[data-theme="dark"] .slider { transform: translateX(20px); }
   border-radius: var(--radius-md);
   padding: 10px 10px;
   min-height: 44px;
-  font-weight: 820;
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
   cursor: pointer;
   transition: background-color var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease), transform var(--t) var(--ease);
 }
