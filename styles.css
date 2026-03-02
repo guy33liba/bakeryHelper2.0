@@ -1,687 +1,465 @@
+/* Bakelist Component (HTML5 + Modern CSS)
+   - Light/Dark themes via CSS variables
+   - Automatic switching: prefers-color-scheme
+   - Manual override classes: .light-theme / .dark-theme (apply to <html> or <body>)
+   - No hardcoded hex colors outside variable blocks
+*/
+
+/* =========================
+   Theme Tokens (Light)
+   ========================= */
 :root {
-  color-scheme: light;
-  --bg: #fff4e5;
-  --bg-alt: #fffaf2;
-  --bg-glow: #ffe2c4;
-  --header-surface: rgba(255, 255, 255, 0.7);
-  --header-border: rgba(242, 210, 182, 0.85);
-  --card: #ffffff;
-  --text: #2b1b0f;
-  --muted: #5e4a3b;
-  --accent: #ff8b3d;
-  --accent-strong: #ff6b1a;
-  --outline: #f2d2b6;
-  --shadow: 0 10px 30px rgba(43, 27, 15, 0.12);
-  --radius: 22px;
-  --bg-grad: linear-gradient(155deg, #ffe6c9 0%, #fff1dc 45%, #fff7ef 100%);
-  --bg-alt-grad: linear-gradient(180deg, #fff7ef 0%, #ffe9d6 100%);
-  --card-grad: linear-gradient(155deg, #ffffff 0%, #ffefd9 100%);
-  --header-grad: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 243, 228, 0.82) 100%
-  );
-  --accent-grad: linear-gradient(135deg, #ffb870 0%, #ff7a26 100%);
-  --text-shadow-strong: 0 3px 14px rgba(75, 40, 18, 0.35);
-  --text-shadow-soft: 0 2px 10px rgba(75, 40, 18, 0.28);
+  color-scheme: light dark;
+
+  /* Brand + base colors (hexes live only here) */
+  --c-bg: #f9f9f9;
+  --c-surface: #ffffff;
+  --c-surface-2: #f2f2f2;
+  --c-text: #1a1a1a;
+  --c-muted: #4a4a4a;
+  --c-border: #e2e2e2;
+
+  --c-primary: #e67e22;
+  --c-primary-ink: #111111;
+  --c-on-primary: #1a1a1a;
+
+  /* Feedback / states */
+  --c-focus: #e67e22;
+  --c-shadow: rgba(0, 0, 0, 0.12);
+  --c-shadow-2: rgba(0, 0, 0, 0.18);
+
+  /* Component sizing + motion */
+  --radius-1: 12px;
+  --radius-2: 16px;
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 20px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --ring: 0 0 0 3px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 180ms;
+  --t-theme: 300ms;
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --lh: 1.45;
 }
 
-[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #1a110b;
-  --bg-alt: #24160f;
-  --bg-glow: #2f1d12;
-  --header-surface: rgba(26, 17, 11, 0.78);
-  --header-border: rgba(90, 58, 40, 0.7);
-  --card: #2b1b12;
-  --text: #fff8f2;
-  --muted: #e4d2c3;
-  --accent: #ff9b4a;
-  --accent-strong: #ff7a26;
-  --outline: #5a3a28;
-  --shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
-  --bg-grad: linear-gradient(155deg, #3b2216 0%, #1a110b 55%, #2a190f 100%);
-  --bg-alt-grad: linear-gradient(180deg, #2c190f 0%, #1b120c 100%);
-  --card-grad: linear-gradient(155deg, #362015 0%, #22140d 100%);
-  --header-grad: linear-gradient(
-    180deg,
-    rgba(20, 13, 9, 0.95) 0%,
-    rgba(42, 25, 16, 0.84) 100%
-  );
-  --accent-grad: linear-gradient(135deg, #ffc07a 0%, #ff7a26 100%);
-  --text-shadow-strong: 0 3px 16px rgba(0, 0, 0, 0.7);
-  --text-shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.6);
+/* =========================
+   Theme Tokens (Auto Dark)
+   ========================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #121212;
+    --c-surface: #1a1a1a;
+    --c-surface-2: #171717;
+    --c-text: #eeeeee;
+    --c-muted: #bdbdbd;
+    --c-border: #2a2a2a;
+
+    --c-primary: #f39c12;
+    --c-primary-ink: #0c0c0c;
+    --c-on-primary: #0c0c0c;
+
+    --c-focus: #f39c12;
+    --c-shadow: rgba(0, 0, 0, 0.55);
+    --c-shadow-2: rgba(0, 0, 0, 0.7);
+  }
 }
 
-[data-theme="dark"] body {
-  font-weight: 600;
+/* =========================
+   Manual Theme Overrides
+   Apply to <html> or <body>
+   ========================= */
+.light-theme {
+  --c-bg: #f9f9f9;
+  --c-surface: #ffffff;
+  --c-surface-2: #f2f2f2;
+  --c-text: #1a1a1a;
+  --c-muted: #4a4a4a;
+  --c-border: #e2e2e2;
+  --c-primary: #e67e22;
+  --c-primary-ink: #111111;
+  --c-on-primary: #1a1a1a;
+  --c-focus: #e67e22;
+  --c-shadow: rgba(0, 0, 0, 0.12);
+  --c-shadow-2: rgba(0, 0, 0, 0.18);
 }
 
-* {
+.dark-theme {
+  --c-bg: #121212;
+  --c-surface: #1a1a1a;
+  --c-surface-2: #171717;
+  --c-text: #eeeeee;
+  --c-muted: #bdbdbd;
+  --c-border: #2a2a2a;
+  --c-primary: #f39c12;
+  --c-primary-ink: #0c0c0c;
+  --c-on-primary: #0c0c0c;
+  --c-focus: #f39c12;
+  --c-shadow: rgba(0, 0, 0, 0.55);
+  --c-shadow-2: rgba(0, 0, 0, 0.7);
+}
+
+/* =========================
+   Base / Page Helpers
+   ========================= */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  line-height: var(--lh);
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  min-height: 100vh;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 42%),
-    var(--bg-grad);
-  color: var(--text);
-  font-family: "Rubik", "Assistant", "Segoe UI", sans-serif;
-  font-size: 20px;
-  direction: rtl;
-  font-weight: 500;
+  background: var(--c-bg);
+  color: var(--c-text);
+  transition:
+    background-color var(--t-theme) var(--ease),
+    color var(--t-theme) var(--ease);
 }
 
-#root {
-  min-height: 100vh;
+a {
+  color: inherit;
 }
 
-.app-shell {
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring) color-mix(in oklab, var(--c-focus), transparent 55%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================
+   Bakelist
+   Markup expectation (semantic):
+   <section class="bakelist" aria-label="Bakelist">
+     <header class="bakelist__header">...</header>
+     <div class="bakelist__grid">
+       <article class="bakecard">...</article>
+     </div>
+   </section>
+   ========================= */
+.bakelist {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding: clamp(var(--space-4), 3vw, var(--space-6));
+}
+
+.bakelist__header {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding-bottom: calc(90px + env(safe-area-inset-bottom));
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
-.app-header {
-  padding: 20px 20px 10px;
-  text-align: right;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(0, 0, 0, 0) 55%),
-    var(--header-grad);
-  border-bottom: 1px solid var(--header-border);
+.bakelist__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  letter-spacing: -0.02em;
 }
 
-.header-theme {
-  margin-top: 12px;
+.bakelist__subtitle {
+  margin: 6px 0 0;
+  color: var(--c-muted);
+  max-width: 62ch;
+}
+
+.bakelist__actions {
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: 10rem;
-  justify-content: space-between;
-  background: var(--card-grad);
-  border: 2px solid var(--outline);
-  border-radius: 16px;
-  padding: 10px 14px;
-  box-shadow: var(--shadow);
+  gap: var(--space-2);
+  flex-wrap: wrap;
 }
 
-.header-theme-label {
-  font-size: 18px;
-  color: var(--muted);
-}
-
-.brand {
-  font-size: 36px;
-  font-weight: 700;
-  text-shadow: var(--text-shadow-strong);
-}
-
-.tagline {
-  font-size: 20px;
-  color: var(--muted);
-  text-shadow: var(--text-shadow-soft);
-}
-
-.app-main {
-  padding: 10px 20px 20px;
-  max-width: 980px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.step-header h1 {
-  font-size: 34px;
-  margin: 0 0 6px;
-  font-weight: 700;
-  text-shadow: var(--text-shadow-strong);
-}
-
-.step-header p {
-  margin: 0 0 18px;
-  color: var(--muted);
-  font-size: 20px;
-  font-weight: 500;
-  text-shadow: var(--text-shadow-soft);
-}
-
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-
-.big-card {
-  background: var(--card-grad);
-  border: 2px solid var(--outline);
-  border-radius: var(--radius);
-  padding: 22px;
-  box-shadow: var(--shadow);
-}
-
-.big-card h2 {
-  margin: 0 0 10px;
-  font-size: 26px;
-}
-
-.muted {
-  color: var(--muted);
-  margin: 0 0 12px;
-}
-
-.big-button {
-  min-height: 64px;
-  padding: 16px 22px;
-  font-size: 20px;
-  border-radius: 16px;
-  border: 2px solid transparent;
+/* =========================
+   Theme Toggle Button
+   (Add aria-label in HTML, e.g. aria-label="Toggle theme")
+   ========================= */
+.theme-toggle {
+  appearance: none;
+  border: 1px solid var(--c-border);
+  background: color-mix(in oklab, var(--c-surface), var(--c-bg) 35%);
+  color: var(--c-text);
+  border-radius: 999px;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
   transition:
-    transform 0.05s ease,
-    background 0.2s ease;
-  text-align: center;
+    background-color var(--t-theme) var(--ease),
+    border-color var(--t-theme) var(--ease),
+    color var(--t-theme) var(--ease),
+    transform var(--t-fast) var(--ease);
 }
 
-.big-button:active {
-  transform: translateY(1px);
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--c-primary), var(--c-border) 55%);
 }
 
-.full-width {
-  width: 100%;
+.theme-toggle:active {
+  transform: translateY(0);
 }
 
-.paste-action {
-  margin-top: 8px;
-}
-
-.big-button-primary {
-  background: var(--accent-grad);
-  color: #1b120b;
-  margin-top: 1rem;
-}
-
-.big-button-secondary {
-  background: var(--card-grad);
-  color: var(--text);
-  border-color: var(--outline);
-}
-
-.big-button-ghost {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--outline);
-}
-
-.big-button:focus-visible,
-.tab-button:focus-visible,
-.segmented button:focus-visible,
-.stepper button:focus-visible,
-.check-row input:focus-visible,
-.chip:focus-visible,
-.mini-remove:focus-visible,
-.big-input:focus-visible {
-  outline: 3px solid var(--accent-strong);
-  outline-offset: 2px;
-}
-
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: stretch;
-}
-
-.button-row .big-button {
-  flex: 1 1 180px;
-}
-
-.simple-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 12px;
-  display: grid;
-  gap: 8px;
-}
-
-.recipe-card h2 {
-  margin-bottom: 6px;
-}
-
-.wizard {
-  background: linear-gradient(135deg, rgba(255, 204, 170, 0.4), var(--card));
-}
-
-.step-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
+.theme-toggle__pill {
+  width: 38px;
+  height: 22px;
   border-radius: 999px;
-  background: var(--bg-alt);
-  border: 2px solid var(--outline);
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  text-align: right;
-}
-
-.big-input {
-  min-height: 60px;
-  padding: 12px 16px;
-  font-size: 20px;
-  border-radius: 16px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-  color: var(--text);
-  width: 100%;
-  text-align: right;
-}
-
-.segmented {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-start;
-}
-
-.segmented button {
-  min-height: 56px;
-  padding: 10px 16px;
-  border-radius: 14px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-  font-size: 18px;
-  cursor: pointer;
-  text-align: center;
-  flex: 1 1 120px;
-}
-
-.segmented button.active {
-  background: var(--accent-grad);
-  border-color: var(--accent-strong);
-}
-
-.chip {
-  margin-top: 8px;
-  min-height: 48px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 2px dashed var(--outline);
-  background: transparent;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.chip.active {
-  background: var(--accent-grad);
-  border-style: solid;
-}
-
-.stepper {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-}
-
-.stepper button {
-  min-height: 56px;
-  min-width: 56px;
-  border-radius: 14px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-  font-size: 26px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.stepper-value {
-  min-width: 56px;
-  text-align: center;
-  font-size: 22px;
-  padding: 0 6px;
-}
-
-.mini-list {
-  display: grid;
-  gap: 8px;
-}
-
-.mini-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 12px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-  gap: 10px;
-}
-
-.mini-remove {
-  min-height: 48px;
-  padding: 6px 12px;
-  border-radius: 10px;
-  border: 2px solid var(--outline);
-  background: transparent;
-  cursor: pointer;
-}
-
-.price-list {
-  display: grid;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.price-row {
-  display: grid;
-  grid-template-columns: 1fr 140px auto;
-  gap: 10px;
-  align-items: center;
-  padding: 10px 12px;
-  border-radius: 14px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-}
-
-.price-name {
-  font-weight: 600;
-}
-
-.price-input {
-  min-height: 48px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  border: 2px solid var(--outline);
-  background: var(--card-grad);
-  color: var(--text);
-  font-size: 18px;
-  text-align: right;
-}
-
-.batch-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--outline);
-}
-
-.batch-row:last-child {
-  border-bottom: none;
-}
-
-.batch-title {
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.batch-cost {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 18px;
-}
-
-.list-header {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.list-group h3 {
-  margin: 14px 0 8px;
-  font-size: 20px;
-}
-
-.total-row {
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 14px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-  font-weight: 700;
-  text-align: right;
-}
-
-.checklist {
-  display: grid;
-  gap: 8px;
-}
-
-.check-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  border-radius: 14px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-  font-size: 20px;
-  justify-content: space-between;
-}
-
-.check-row input {
-  width: 28px;
-  height: 28px;
-  flex: 0 0 auto;
-}
-
-.check-row span {
-  flex: 1;
-  text-align: right;
-}
-
-.check-row.checked {
-  opacity: 0.6;
-  text-decoration: line-through;
-}
-
-.bottom-tabs {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  background: var(--card-grad);
-  border-top: 2px solid var(--outline);
-  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
-  gap: 10px;
-  z-index: 5;
-}
-
-.tab-button {
-  min-height: 60px;
-  border-radius: 14px;
-  border: 2px solid var(--outline);
-  background: var(--bg-alt-grad);
-  font-size: 18px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.tab-button.active {
-  background: var(--accent-grad);
-  border-color: var(--accent-strong);
-}
-
-.theme-switch {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.theme-label {
-  font-size: 20px;
-}
-
-.switch {
+  background: color-mix(in oklab, var(--c-surface-2), var(--c-bg) 35%);
+  border: 1px solid var(--c-border);
   position: relative;
-  display: inline-block;
-  width: 72px;
-  height: 40px;
+  flex: none;
+  transition:
+    background-color var(--t-theme) var(--ease),
+    border-color var(--t-theme) var(--ease);
 }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--bg-alt-grad);
+.theme-toggle__dot {
+  width: 16px;
+  height: 16px;
   border-radius: 999px;
-  transition: 0.2s ease;
-}
-
-.slider::before {
+  background: var(--c-primary);
   position: absolute;
-  content: "";
-  height: 32px;
-  width: 32px;
-  left: 4px;
-  bottom: 4px;
-  background: var(--card);
-  border-radius: 50%;
-  transition: 0.2s ease;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  box-shadow: 0 6px 14px var(--c-shadow);
+  transition:
+    transform var(--t-fast) var(--ease),
+    background-color var(--t-theme) var(--ease);
 }
 
-.switch input:checked + .slider {
-  background: var(--accent-grad);
+/* When user forces dark theme, slide the dot */
+.dark-theme .theme-toggle__dot {
+  transform: translate(16px, -50%);
 }
 
-.switch input:checked + .slider::before {
-  transform: translateX(32px);
+.theme-toggle__label {
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
 }
 
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 90px;
-  transform: translateX(-50%);
-  background: var(--accent-grad);
-  color: #1b120b;
-  padding: 10px 18px;
+/* =========================
+   Responsive Card Grid
+   ========================= */
+.bakelist__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(var(--space-3), 2.2vw, var(--space-5));
+}
+
+@media (min-width: 720px) {
+  .bakelist__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .bakelist__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .bakelist__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* =========================
+   Bake Card
+   Markup expectation (semantic):
+   <article class="bakecard">
+     <header class="bakecard__header">
+       <h3 class="bakecard__title">...</h3>
+       <span class="bakecard__tag">Category</span>
+     </header>
+     <div class="bakecard__body">
+       <p class="bakecard__desc">...</p>
+       <ul class="bakecard__list">...</ul>
+     </div>
+     <footer class="bakecard__footer">
+       <div class="bakecard__meta">
+         <span class="bakecard__meta-label">Bake time</span>
+         <span class="bakecard__meta-value">35 min</span>
+       </div>
+       <a class="bakecard__cta" href="#">Add</a>
+     </footer>
+   </article>
+   ========================= */
+.bakecard {
+  background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--c-surface), var(--c-bg) 18%),
+      var(--c-surface)
+    );
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-2);
+  box-shadow: 0 18px 40px var(--c-shadow);
+  overflow: clip;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease),
+    border-color var(--t-theme) var(--ease),
+    background-color var(--t-theme) var(--ease),
+    color var(--t-theme) var(--ease);
+}
+
+.bakecard:hover {
+  transform: translateY(-2px) scale(1.01);
+  border-color: color-mix(in oklab, var(--c-primary), var(--c-border) 55%);
+  box-shadow: 0 22px 52px var(--c-shadow-2);
+}
+
+.bakecard:focus-within {
+  border-color: color-mix(in oklab, var(--c-primary), var(--c-border) 45%);
+}
+
+.bakecard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid color-mix(in oklab, var(--c-border), transparent 10%);
+}
+
+.bakecard__title {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.bakecard__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
   border-radius: 999px;
-  font-weight: 600;
-  box-shadow: var(--shadow);
+  border: 1px solid color-mix(in oklab, var(--c-primary), var(--c-border) 55%);
+  background: color-mix(in oklab, var(--c-primary), var(--c-surface) 84%);
+  color: color-mix(in oklab, var(--c-primary-ink), var(--c-text) 20%);
+  font-weight: 650;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
-.hidden-input {
-  display: none;
+.bakecard__body {
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
 }
 
-@media (max-width: 600px) {
-  .app-header {
-    padding: 16px 16px 8px;
-  }
+.bakecard__desc {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 0.95rem;
+}
 
-  .app-main {
-    padding: 8px 16px 20px;
-  }
+.bakecard__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 8px;
+}
 
-  .brand {
-    font-size: 32px;
-  }
+.bakecard__list li {
+  color: color-mix(in oklab, var(--c-text), var(--c-muted) 45%);
+}
 
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.bakecard__footer {
+  margin-top: auto;
+  padding: var(--space-4);
+  border-top: 1px solid color-mix(in oklab, var(--c-border), transparent 10%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
 
-  .button-row {
-    flex-direction: column;
-  }
+.bakecard__meta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
 
-  .tab-button {
-    font-size: 17px;
-  }
+.bakecard__meta-label {
+  font-size: 0.78rem;
+  color: var(--c-muted);
+  letter-spacing: 0.02em;
+}
 
-  body {
-    font-size: 19px;
-    line-height: 1.45;
-  }
+.bakecard__meta-value {
+  font-size: 1.05rem;
+  font-weight: 780;
+  letter-spacing: -0.01em;
+}
 
-  .big-card {
-    padding: 18px;
-    border-radius: 18px;
-  }
+.bakecard__cta {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--c-primary), var(--c-border) 45%);
+  background: var(--c-primary);
+  color: var(--c-on-primary);
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  min-width: 9ch;
+  transition:
+    transform var(--t-fast) var(--ease),
+    background-color var(--t-theme) var(--ease),
+    border-color var(--t-theme) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
 
-  .big-button {
-    min-height: 64px;
-    font-size: 19px;
-  }
+.bakecard__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px var(--c-shadow);
+}
 
-  .big-input {
-    min-height: 56px;
-    font-size: 18px;
-  }
+.bakecard__cta:active {
+  transform: translateY(0);
+}
 
-  .segmented button,
-  .stepper button,
-  .tab-button {
-    min-height: 52px;
-    font-size: 17px;
-  }
+.bakecard__cta:focus-visible {
+  box-shadow:
+    var(--ring) color-mix(in oklab, var(--c-focus), transparent 45%),
+    0 14px 28px var(--c-shadow);
+}
 
-  .list-header {
-    gap: 12px;
-  }
-
-  .button-row {
-    gap: 8px;
-  }
-
-  .batch-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .check-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .check-row span {
-    width: 100%;
-  }
-
-  .check-row input {
-    width: 32px;
-    height: 32px;
-  }
-
-  .price-row {
-    grid-template-columns: 1fr;
-    align-items: stretch;
-  }
-
-  .price-input {
-    width: 100%;
-  }
-
-  .button-row .big-button {
-    flex: 1 1 100%;
-  }
+/* =========================
+   Optional: Compact variant
+   ========================= */
+.bakelist--compact .bakecard__header,
+.bakelist--compact .bakecard__body,
+.bakelist--compact .bakecard__footer {
+  padding: var(--space-3);
 }
