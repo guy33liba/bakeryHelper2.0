@@ -7,10 +7,7 @@ import Recipes from "./routes/Recipes.jsx";
 import List from "./routes/List.jsx";
 import Settings from "./routes/Settings.jsx";
 import { loadData, saveData } from "./lib/storage.js";
-import {
-  normalizeIngredientName,
-  pricePerUnitFromSaved,
-} from "./lib/ingredients.js";
+import { normalizeIngredientName, pricePerUnitFromSaved } from "./lib/ingredients.js";
 
 const ROUTES = ["/", "/recipes", "/list", "/settings"];
 
@@ -74,9 +71,7 @@ function App() {
 
   const toggleRecipe = (recipeId) => {
     setData((prev) => {
-      const isSelected = prev.plan.selected.some(
-        (item) => item.recipeId === recipeId,
-      );
+      const isSelected = prev.plan.selected.some((item) => item.recipeId === recipeId);
       const selected = isSelected
         ? prev.plan.selected.filter((item) => item.recipeId !== recipeId)
         : [...prev.plan.selected, { recipeId, batches: 1 }];
@@ -102,22 +97,20 @@ function App() {
       ...prev,
       recipes: [...prev.recipes, recipe],
     }));
-     showToast("Saved");
+    showToast("Saved");
   };
 
   const removeRecipe = (recipeId) => {
-     if (!window.confirm("Delete this recipe?")) return;
+    if (!window.confirm("Delete this recipe?")) return;
     setData((prev) => ({
       ...prev,
       recipes: prev.recipes.filter((recipe) => recipe.id !== recipeId),
       plan: {
         ...prev.plan,
-        selected: prev.plan.selected.filter(
-          (item) => item.recipeId !== recipeId,
-        ),
+        selected: prev.plan.selected.filter((item) => item.recipeId !== recipeId),
       },
     }));
-     showToast("Saved");
+    showToast("Saved");
   };
 
   const updateListState = (checked) => {
@@ -128,10 +121,10 @@ function App() {
   };
 
   const resetAll = () => {
-     if (!window.confirm("Reset everything?")) return;
+    if (!window.confirm("Reset everything?")) return;
     const fresh = loadData(true);
     setData(fresh);
-     showToast("Saved");
+    showToast("Saved");
   };
 
   const updateDemoEnabled = (demoDataEnabled) => {
@@ -153,8 +146,7 @@ function App() {
       const recipes = prev.recipes.map((recipe) => {
         if (!Array.isArray(recipe.ingredients)) return recipe;
         const ingredients = recipe.ingredients.map((ingredient) => {
-          if (normalizeIngredientName(ingredient.name) !== key)
-            return ingredient;
+          if (normalizeIngredientName(ingredient.name) !== key) return ingredient;
           return {
             ...ingredient,
             pricePerUnit: pricePerUnitFromSaved(safePrice, ingredient.unit),
@@ -181,10 +173,7 @@ function App() {
           if (!updateKeys.has(key)) return ingredient;
           return {
             ...ingredient,
-            pricePerUnit: pricePerUnitFromSaved(
-              ingredientPrices[key],
-              ingredient.unit,
-            ),
+            pricePerUnit: pricePerUnitFromSaved(ingredientPrices[key], ingredient.unit),
           };
         });
         return { ...recipe, ingredients };
@@ -197,8 +186,7 @@ function App() {
     const key = normalizeIngredientName(name);
     if (!key) return;
     setData((prev) => {
-      if (!prev.ingredientPrices || prev.ingredientPrices[key] == null)
-        return prev;
+      if (!prev.ingredientPrices || prev.ingredientPrices[key] == null) return prev;
       const next = { ...prev.ingredientPrices };
       delete next[key];
       return { ...prev, ingredientPrices: next };
@@ -236,7 +224,7 @@ function App() {
 
         {path === "/recipes" && (
           <>
-            <StepHeader title="Step 1" subtitle="Pick one or more recipes." />
+            <StepHeader title="Step  1" subtitle="Pick one or more recipes." />
             <Recipes
               recipes={data.recipes}
               selected={data.plan.selected}
