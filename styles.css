@@ -1,0 +1,104 @@
+:root {
+  --bg: #f9f4ed;
+  --card: #ffffff;
+  --ink: #2b1c10;
+  --muted: #6d5848;
+  --accent: #d27b32;
+  --accent-dark: #b45f1f;
+  --ring: #f3ddc8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(circle at top, #fff, var(--bg));
+  color: var(--ink);
+}
+
+.app {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--ring);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(41, 25, 10, 0.08);
+  padding: 1.2rem;
+}
+
+.hero {
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.4rem 0;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+input {
+  border: 1px solid #dcc0a8;
+  border-radius: 10px;
+  padding: 0.65rem 0.7rem;
+  font-size: 1rem;
+}
+
+.btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.results {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.results li {
+  background: #fff7f0;
+  border: 1px solid #f1d7bf;
+  border-radius: 10px;
+  padding: 0.65rem;
+}

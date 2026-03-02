@@ -2,13 +2,59 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bakinghelper2.0</title><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2857092637558649"
-     crossorigin="anonymous"></script>
+    <title>Bakery Helper 2.0</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <main class="app">
+      <header class="hero card">
+        <p class="eyebrow">Simple Bakery Planner</p>
+        <h1>Bakery Helper 2.0</h1>
+        <p class="subtitle">
+          Plan your production, calculate ingredient totals, and estimate revenue in a
+          clean HTML/CSS/JavaScript app.
+        </p>
+      </header>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Recipe Inputs</h2>
+          <label>
+            Product Name
+            <input id="productName" type="text" value="Chocolate Chip Cookies" />
+          </label>
+          <label>
+            Ingredients per Batch (kg)
+            <input id="ingredientsPerBatch" type="number" min="0" step="0.1" value="2.4" />
+          </label>
+          <label>
+            Cost per Batch ($)
+            <input id="costPerBatch" type="number" min="0" step="0.01" value="18" />
+          </label>
+          <label>
+            Selling Price per Unit ($)
+            <input id="salePrice" type="number" min="0" step="0.01" value="4.5" />
+          </label>
+        </article>
+
+        <article class="card">
+          <h2>Production Plan</h2>
+          <label>
+            Number of Batches
+            <input id="batches" type="number" min="1" step="1" value="6" />
+          </label>
+          <label>
+            Units Produced per Batch
+            <input id="unitsPerBatch" type="number" min="1" step="1" value="24" />
+          </label>
+          <button id="calculateBtn" class="btn">Calculate Plan</button>
+
+          <ul id="results" class="results"></ul>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
   </body>
 </html>
