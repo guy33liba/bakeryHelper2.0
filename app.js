@@ -1058,7 +1058,8 @@ function renderHome({ main }) {
     }),
   );
 
-  stack.appendChild(
+  const homeCardRow = el("div", { class: "home-card-row" });
+  homeCardRow.appendChild(
     bigCard({
       className: "export-card",
       children: [
@@ -1080,7 +1081,7 @@ function renderHome({ main }) {
     }),
   );
 
-  stack.appendChild(
+  homeCardRow.appendChild(
     bigCard({
       children: [
         el("h2", null, "My shopping list"),
@@ -1107,6 +1108,8 @@ function renderHome({ main }) {
       ],
     }),
   );
+
+  stack.appendChild(homeCardRow);
 
   main.appendChild(stack);
 }
