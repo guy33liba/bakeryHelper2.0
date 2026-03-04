@@ -315,6 +315,59 @@ a:hover {
   }
 }
 
+.instructions-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 720px) {
+  .instructions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.instruction-card {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
+.instruction-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.instruction-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--primary), var(--surface) 90%);
+  color: var(--ink);
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  box-shadow: 0 10px 22px color-mix(in oklab, var(--shadow), transparent 30%);
+}
+
+.instruction-action {
+  justify-self: start;
+}
+
+.instruction-tips {
+  margin-top: var(--space-4);
+}
+
+.instruction-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: var(--space-2);
+}
+
 /* =========================
    One-page layout helpers
    ========================= */

@@ -1,6 +1,6 @@
 // Vanilla JS port of the React app (hash-based routing).
 
-const ROUTES = ["/all", "/", "/recipes", "/list", "/settings"];
+const ROUTES = ["/all", "/", "/recipes", "/list", "/settings", "/instructions"];
 const STORAGE_KEY = "bakelist_v1";
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
@@ -1570,6 +1570,102 @@ function renderSettings({ main }) {
   main.appendChild(stack);
 }
 
+function renderInstructions({ main }) {
+  main.appendChild(
+    stepHeader({
+      title: "How to use BakeList",
+      subtitle: "Follow these steps to turn recipes into a ready-to-shop list.",
+      align: "center",
+    }),
+  );
+
+  const steps = [
+    {
+      title: "Pick recipes",
+      body: "Open the Recipes tab and add one or more ideas to your plan. Paste text to add custom recipes in seconds.",
+      action: {
+        text: "Go to Recipes",
+        variant: "secondary",
+        onClick: () => navigate("/recipes"),
+        aria: "Go to recipes",
+      },
+    },
+    {
+      title: "Adjust batches",
+      body: "Switch to Batches & list to set how many times you plan to bake each recipe. Costs update automatically.",
+      action: {
+        text: "Open Batches",
+        variant: "secondary",
+        onClick: () => navigate("/list"),
+        aria: "Open batches and list",
+      },
+    },
+    {
+      title: "Shop & share",
+      body: "Use the checklist to mark items as purchased, copy the list, or tap Share to send everything to WhatsApp.",
+      action: {
+        text: "View list",
+        variant: "secondary",
+        onClick: () => navigate("/list"),
+        aria: "View shopping list",
+      },
+    },
+    {
+      title: "Tune prices & data",
+      body: "Head to Settings to manage ingredient prices, toggle demo recipes, or export your current list to CSV or text.",
+      action: {
+        text: "Open Settings",
+        variant: "secondary",
+        onClick: () => navigate("/settings"),
+        aria: "Open settings",
+      },
+    },
+  ];
+
+  const grid = el("div", { class: "instructions-grid" });
+  steps.forEach((step, index) => {
+    grid.appendChild(
+      bigCard({
+        className: "instruction-card",
+        children: [
+          el("div", { class: "instruction-number" }, String(index + 1).padStart(2, "0")),
+          el("h3", null, step.title),
+          el("p", { class: "muted" }, step.body),
+          step.action
+            ? bigButton({
+                text: step.action.text,
+                variant: step.action.variant,
+                onClick: step.action.onClick,
+                ariaLabel: step.action.aria,
+                className: "instruction-action",
+              })
+            : null,
+        ],
+      }),
+    );
+  });
+
+  main.appendChild(grid);
+
+  main.appendChild(
+    bigCard({
+      className: "instruction-tips",
+      children: [
+        el("h2", null, "Tips"),
+        el(
+          "ul",
+          { class: "instruction-list" },
+          [
+            "Use All view to scroll through every section on one page.",
+            "Ingredient prices auto-convert grams into kilogram pricing.",
+            "Demo data can be turned off anytime if you only want your own recipes.",
+          ].map((tip, idx) => el("li", { key: `tip-${idx}` }, tip)),
+        ),
+      ],
+    }),
+  );
+}
+
 function renderAll({ main }) {
   const wrap = (id, label, renderFn) => {
     const section = el("section", { class: "page-section", id, "aria-label": label });
@@ -1582,6 +1678,7 @@ function renderAll({ main }) {
   wrap("recipes", "Recipes", ({ main: inner }) => renderRecipes({ main: inner }));
   wrap("list", "Shopping list", ({ main: inner }) => renderList({ main: inner }));
   wrap("settings", "Settings", ({ main: inner }) => renderSettings({ main: inner }));
+  wrap("instructions", "Instructions", ({ main: inner }) => renderInstructions({ main: inner }));
   main.appendChild(all);
 }
 
@@ -1592,6 +1689,7 @@ function renderBottomTabs({ shell, path }) {
     { path: "/recipes", label: "Recipes" },
     { path: "/list", label: "List" },
     { path: "/settings", label: "Settings" },
+    { path: "/instructions", label: "Instructions" },
   ];
   const nav = el("nav", { class: "bottom-tabs", "aria-label": "Bottom navigation" });
   tabs.forEach((tab) => {
@@ -1657,6 +1755,7 @@ function render() {
   if (path === "/recipes") renderRecipes({ main });
   if (path === "/list") renderList({ main });
   if (path === "/settings") renderSettings({ main });
+  if (path === "/instructions") renderInstructions({ main });
   shell.appendChild(main);
 
   renderBottomTabs({ shell, path });
