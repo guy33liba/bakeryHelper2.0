@@ -1260,7 +1260,7 @@ function renderList({ main }) {
     }
   };
 
-  const sendToWhatsApp = () => {
+  const shareList = () => {
     const text = listToText(groups);
     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
@@ -1329,10 +1329,10 @@ function renderList({ main }) {
       { class: "button-row" },
       bigButton({ text: "Copy list", variant: "secondary", onClick: copyList, ariaLabel: "Copy list" }),
       bigButton({
-        text: "Send to WhatsApp",
+        text: "Share",
         variant: "secondary",
-        onClick: sendToWhatsApp,
-        ariaLabel: "Send list to WhatsApp",
+        onClick: shareList,
+        ariaLabel: "Share list",
       }),
       bigButton({
         text: "Reset all to not purchased",
