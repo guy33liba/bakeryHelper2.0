@@ -189,7 +189,7 @@ a:hover {
 .app-shell {
   min-height: 100dvh;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   background:
     radial-gradient(
       1100px 640px at 12% -18%,
@@ -716,20 +716,21 @@ textarea.big-input {
   user-select: none;
 }
 
+.theme-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
 .theme-label {
   font-weight: 900;
 }
 
 .switch {
-  width: 46px;
-  height: 26px;
+  width: 40px;
+  height: 22px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--surface-2), var(--bg) 18%),
-    color-mix(in oklab, var(--surface-2), var(--bg) 38%)
-  );
+  border: 1px solid color-mix(in oklab, var(--primary), var(--border) 65%);
+  background: linear-gradient(180deg, color-mix(in oklab, var(--primary), white 75%), var(--surface));
   position: relative;
   padding: 2px;
   display: inline-flex;
@@ -744,10 +745,10 @@ textarea.big-input {
 }
 
 .slider {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 999px;
-  background: var(--primary);
+  background: color-mix(in oklab, var(--primary), var(--surface) 20%);
   box-shadow: 0 12px 20px color-mix(in oklab, var(--shadow), transparent 18%);
   transform: translateX(0);
   transition:
@@ -756,7 +757,7 @@ textarea.big-input {
 }
 
 html[data-theme="dark"] .slider {
-  transform: translateX(20px);
+  transform: translateX(18px);
 }
 .switch:has(input:focus-visible) {
   box-shadow: var(--ring) color-mix(in oklab, var(--focus), transparent 55%);

@@ -1716,11 +1716,19 @@ function renderHeader({ shell, path }) {
     onChange: (event) => setTheme(event.target.checked ? "dark" : "light"),
     "aria-label": checked ? "Dark mode on" : "Light mode on",
   });
+  const themeIcon = el("span", { class: "theme-icon", "aria-hidden": "true" }, checked ? "🌙" : "☀️");
+  const themeLabelText = checked ? "Dark" : "Light";
   const themeSwitch = el(
     "label",
     { class: "theme-switch" },
-    el("span", { class: "theme-label" }, checked ? "Dark" : "Light"),
-    el("span", { class: "switch" }, input, el("span", { class: "slider" })),
+    themeIcon,
+    el("span", { class: "theme-label" }, themeLabelText),
+    el(
+      "span",
+      { class: "switch" },
+      input,
+      el("span", { class: "slider" }),
+    ),
   );
 
   const showBrand = path === "/" || path === "/all";
