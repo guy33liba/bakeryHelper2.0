@@ -425,6 +425,15 @@ a:hover {
     justify-self: end;
     text-align: right;
   }
+
+  .page-section .step-header.step-header-center {
+    grid-template-columns: 1fr;
+  }
+
+  .page-section .step-header.step-header-center p {
+    justify-self: center;
+    text-align: center;
+  }
 }
 
 .big-card::before {
