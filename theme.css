@@ -711,8 +711,10 @@ html[data-theme="dark"] .slider {
   border-top: 1px solid var(--border);
   box-shadow: 0 -20px 50px color-mix(in oklab, var(--shadow), transparent 30%);
   backdrop-filter: blur(10px);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: var(--space-2);
   z-index: 50;
 }
@@ -723,12 +725,15 @@ html[data-theme="dark"] .slider {
   background: transparent;
   color: var(--ink-2);
   border-radius: var(--radius-md);
-  padding: 10px 10px;
+  padding: 10px 14px;
   min-height: 44px;
   font-weight: 900;
   font-size: 1.05rem;
   letter-spacing: 0.01em;
   cursor: pointer;
+  text-align: center;
+  min-width: 110px;
+  flex: 0 0 auto;
   transition:
     background-color var(--t) var(--ease),
     color var(--t) var(--ease),
@@ -739,7 +744,7 @@ html[data-theme="dark"] .slider {
 @media (min-width: 980px) {
   .tab-button {
     min-height: 52px;
-    text-align: left;
+    text-align: center;
     padding: 12px 12px;
   }
 }
