@@ -337,6 +337,7 @@ a:hover {
 .step-header-center {
   text-align: center;
   justify-items: center;
+  grid-template-columns: 1fr;
 }
 
 .step-header-center h1,
