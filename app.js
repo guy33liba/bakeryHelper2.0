@@ -687,10 +687,13 @@ function bigCard({ className = "", children }) {
   return el("div", { class: `big-card ${className}`.trim() }, children);
 }
 
-function stepHeader({ title, subtitle }) {
+function stepHeader({ title, subtitle, align = "start" }) {
+  const className = ["step-header", align === "center" ? "step-header-center" : ""]
+    .filter(Boolean)
+    .join(" ");
   return el(
     "div",
-    { class: "step-header" },
+    { class: className },
     el("h1", null, title),
     subtitle ? el("p", null, subtitle) : null,
   );
@@ -1033,6 +1036,7 @@ function renderHome({ main }) {
   main.appendChild(stepHeader({
     title: "Start",
     subtitle: "Pick a recipe, choose batches, and get a shopping list.",
+    align: "center",
   }));
 
   const groups = buildList(state.data.recipes, state.data.plan.selected);
