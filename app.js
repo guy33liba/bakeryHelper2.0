@@ -1051,6 +1051,7 @@ function renderHome({ main }) {
 
   stack.appendChild(
     bigCard({
+      className: "export-card",
       children: [
         el("h2", null, "Recent recipes"),
         selectedRecipes.length === 0
@@ -1597,7 +1598,7 @@ function renderBottomTabs({ shell, path }) {
   shell.appendChild(nav);
 }
 
-function renderHeader({ shell }) {
+function renderHeader({ shell, path }) {
   const checked = state.data.settings.theme === "dark";
   const input = el("input", {
     type: "checkbox",
@@ -1612,14 +1613,16 @@ function renderHeader({ shell }) {
     el("span", { class: "switch" }, input, el("span", { class: "slider" })),
   );
 
+  const showBrand = path === "/" || path === "/all";
+  const headerChildren = [];
+  if (showBrand) {
+    headerChildren.push(el("div", { class: "brand" }, "BakeList"));
+    headerChildren.push(el("div", { class: "tagline" }, "Cookies and cakes, made simple."));
+  }
+  headerChildren.push(el("div", { class: "header-theme" }, themeSwitch));
+
   shell.appendChild(
-    el(
-      "header",
-      { class: "app-header", "aria-live": "polite" },
-      el("div", { class: "brand" }, "BakeList"),
-      el("div", { class: "tagline" }, "Cookies and cakes, made simple."),
-      el("div", { class: "header-theme" }, themeSwitch),
-    ),
+    el("header", { class: "app-header", "aria-live": "polite" }, headerChildren),
   );
 }
 
@@ -1631,7 +1634,7 @@ function render() {
   root.textContent = "";
 
   const shell = el("div", { class: "app-shell" });
-  renderHeader({ shell });
+  renderHeader({ shell, path });
 
   const main = el("main", { class: "app-main" });
   if (path === "/all") renderAll({ main });

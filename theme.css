@@ -57,7 +57,7 @@
   /* Layout */
   --maxw: 1320px;
   --nav-h: 76px;
-  --rail-w: 160px;
+  --rail-w: 220px;
 
   /* Motion */
   --t: 170ms;
@@ -137,6 +137,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
+  overflow-x: hidden;
   transition:
     background-color var(--t-theme) var(--ease),
     color var(--t-theme) var(--ease);
@@ -323,15 +324,19 @@ a:hover {
 .page-all {
   display: grid;
   gap: var(--space-7);
+  justify-items: end;
 }
 
 .page-section {
   scroll-margin-top: 92px;
+  width: min(100%, 960px);
+  justify-self: end;
 }
 
 @media (max-width: 520px) {
   .page-section {
     scroll-margin-top: 120px;
+    width: 100%;
   }
 }
 
@@ -477,6 +482,10 @@ a:hover {
   font-size: 1.35rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
+}
+
+.export-card {
+  margin-bottom: var(--space-4);
 }
 
 .recipe-card {
