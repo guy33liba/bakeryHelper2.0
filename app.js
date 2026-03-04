@@ -1748,6 +1748,7 @@ function render() {
 
   const shell = el("div", { class: "app-shell" });
   renderHeader({ shell, path });
+  renderBottomTabs({ shell, path });
 
   const main = el("main", { class: "app-main" });
   if (path === "/all") renderAll({ main });
@@ -1758,7 +1759,6 @@ function render() {
   if (path === "/instructions") renderInstructions({ main });
   shell.appendChild(main);
 
-  renderBottomTabs({ shell, path });
   if (state.toast) {
     shell.appendChild(
       el("div", { class: "toast", role: "status", "aria-live": "polite" }, state.toast),
