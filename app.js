@@ -716,6 +716,14 @@ let state = {
   toast: "",
 };
 
+if (state.data.settings.theme !== "light") {
+  state.data = {
+    ...state.data,
+    settings: { ...state.data.settings, theme: "light" },
+  };
+  saveData(state.data);
+}
+
 let toastTimer = null;
 function showToast(message) {
   state.toast = String(message || "");
