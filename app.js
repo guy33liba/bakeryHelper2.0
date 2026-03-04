@@ -1046,7 +1046,12 @@ function renderHome({ main }) {
 
   const stack = el("div", { class: "stack" });
   stack.appendChild(
-    bigButton({ text: "Get started", onClick: () => navigate("/recipes"), ariaLabel: "Get started" }),
+    bigButton({
+      text: "Get started",
+      onClick: () => navigate("/recipes"),
+      ariaLabel: "Get started",
+      className: "get-started-button",
+    }),
   );
 
   stack.appendChild(
@@ -1616,8 +1621,11 @@ function renderHeader({ shell, path }) {
   const showBrand = path === "/" || path === "/all";
   const headerChildren = [];
   if (showBrand) {
-    headerChildren.push(el("div", { class: "brand" }, "BakeList"));
-    headerChildren.push(el("div", { class: "tagline" }, "Cookies and cakes, made simple."));
+    const titleWrap = el("div", { class: "header-title" }, [
+      el("div", { class: "brand" }, "BakeList"),
+      el("div", { class: "tagline" }, "Cookies and cakes, made simple."),
+    ]);
+    headerChildren.push(titleWrap);
   }
   headerChildren.push(el("div", { class: "header-theme" }, themeSwitch));
 

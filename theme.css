@@ -224,13 +224,10 @@ a:hover {
   z-index: 40;
   padding: var(--space-5);
   padding-bottom: var(--space-4);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "brand theme"
-    "tagline theme";
-  align-items: start;
-  gap: var(--space-2) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
   backdrop-filter: blur(12px);
   background: color-mix(in oklab, var(--bg), transparent 16%);
   border-bottom: 1px solid color-mix(in oklab, var(--border), transparent 55%);
@@ -259,44 +256,25 @@ a:hover {
   letter-spacing: -0.03em;
   font-size: 2rem;
   line-height: 1.05;
+  text-align: center;
 }
 
 .tagline {
   grid-area: tagline;
   color: var(--ink-2);
   max-width: 66ch;
+  text-align: center;
+  margin-top: var(--space-2);
 }
 
 .header-theme {
-  grid-area: theme;
-  justify-self: end;
-  align-self: start;
+  margin-top: var(--space-3);
 }
 
 .app-main {
   padding: var(--space-5);
   padding-top: 0;
   padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + var(--space-5));
-}
-
-/* Desktop: move tabs to left rail */
-@media (min-width: 980px) {
-  .app-header,
-  .app-main {
-    max-width: min(var(--maxw), calc(100vw - var(--rail-w) - var(--space-6)));
-    margin-left: calc(var(--rail-w) + var(--space-6));
-    margin-right: var(--space-6);
-  }
-
-  .app-main {
-    padding-bottom: var(--space-6);
-  }
-}
-
-@media (min-width: 980px) {
-  .app-main {
-    padding-bottom: var(--space-6);
-  }
 }
 
 @media (max-width: 440px) {
@@ -324,13 +302,13 @@ a:hover {
 .page-all {
   display: grid;
   gap: var(--space-7);
-  justify-items: end;
+  justify-items: center;
 }
 
 .page-section {
   scroll-margin-top: 92px;
   width: min(100%, 960px);
-  justify-self: end;
+  margin-inline: auto;
 }
 
 @media (max-width: 520px) {
@@ -477,7 +455,7 @@ a:hover {
 }
 
 .big-card h2 {
-  margin: 0;
+  margin: 0 0 var(--space-4);
   font-family: var(--font-display);
   font-size: 1.35rem;
   line-height: 1.2;
@@ -505,6 +483,7 @@ a:hover {
   padding: 10px 14px;
   min-height: 44px;
   font-weight: 900;
+  font-size: 1rem;
   letter-spacing: 0.01em;
   cursor: pointer;
   box-shadow: 0 16px 36px color-mix(in oklab, var(--shadow), transparent 38%);
@@ -576,8 +555,13 @@ a:hover {
 
 .button-row {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-4);
   flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.get-started-button {
+  font-size: 1.2rem;
 }
 .full-width {
   width: 100%;
@@ -704,24 +688,6 @@ html[data-theme="dark"] .slider {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-2);
   z-index: 50;
-}
-
-@media (min-width: 980px) {
-  .bottom-tabs {
-    top: 0;
-    bottom: 0;
-    right: auto;
-    width: calc(var(--rail-w) + env(safe-area-inset-left));
-    height: auto;
-    padding: calc(var(--space-5) + env(safe-area-inset-top)) 10px var(--space-5)
-      calc(10px + env(safe-area-inset-left));
-    border-top: 0;
-    border-right: 1px solid var(--border);
-    box-shadow: 20px 0 60px color-mix(in oklab, var(--shadow), transparent 45%);
-    grid-template-columns: 1fr;
-    align-content: start;
-    gap: var(--space-3);
-  }
 }
 
 .tab-button {
